@@ -7,6 +7,7 @@ var express = require('express')
   , routes  = require('./routes');
 
 var app = module.exports = express.createServer();
+app.use(express.bodyParser());
 
 app.get('/',function(req,res)
 {
@@ -23,7 +24,16 @@ app.get('/hi',function(req,res,next)
         res.send(message);
 });
 
+app.get('/users/:userId',function(req,res){
+    res.send("<h1>Hello, User #"+req.params.userId+"!");
+});
 
+app.post('/users',function(req,res){
+    console.log(Object.keys(req));
+    console.log('---------');
+    console.log(Object.keys(req.body));
+    res.send('Creating a new user with the name '+ req.body.username + '.');
+});
 
 console.log('hi'+app.get('port'));
 
