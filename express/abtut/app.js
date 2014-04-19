@@ -2,44 +2,36 @@
 /**
  * Module dependencies.
  */
+//include express
+var express = require('express');
 
-var express = require('express')
-  , routes  = require('./routes');
+//create an express app
+//make it accessable globaly and locally as app
+var app = express.createServer();
 
-var app = module.exports = express.createServer();
-app.use(express.bodyParser());
+app.configure(function(){
+    
+    app.set('views',__dirname+'/views');
+    app.set('view engine','jade');
+
+    //app.router is the engine that is configured by app.verb,
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+
+    app.use(app.router);
+    app.use(express.static(__dirname+'/public'));
+});
 
 app.get('/',function(req,res)
 {
-    res.send('hellow express');
+    res.render('home.jade',{title:'building web apps in node with express'});
 });
 
-app.get('/hi',function(req,res,next)
-{	
-    var message = [
-        '<h1> hello, express </h1>',
-        '<p>welcom to buildig web apps in nodejs with express </p>',
-        '<p> youll love express because it\'s </p>',
-        '<ul><li>fast</li><li>fun</li><li>flexable</li></ul>',].join('\n');
-        res.send(message);
+app.get(/.*/,function(req,res)
+{
+    res.send('unspecified route');
 });
 
-app.get('/users/:userId',function(req,res){
-    res.send("<h1>Hello, User #"+req.params.userId+"!");
-});
 
-app.post('/users',function(req,res){
-    console.log(Object.keys(req));
-    console.log('---------');
-    console.log(Object.keys(req.body));
-    res.send('Creating a new user with the name '+ req.body.username + '.');
-});
-
-console.log('hi'+app.get('port'));
-
+console.log('listening ');
 app.listen(3000);
-
-// dont work
-//http.createServer(app).listen(app.get('port'), function(){
-//	console.log('express server listening on port ' + app.get('port'));
-//}); 
