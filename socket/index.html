@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+    <head>
+        <script src='/socket.io/socket.io.js' type='text/javascript'></script>
+        <script type='text/javascript'>
+            var socket = io.connect('http://vm-0.jjw9128.kd.io:3000');
+            socket.on('data',function(data)
+            {
+                console.log(data);
+            });
+        </script>
+    </head>
+</html>
