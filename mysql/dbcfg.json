@@ -1,0 +1,8 @@
+{
+    "user":"root",
+    "password":"@intF0rtKn0xjava123",
+    "host":"localhost",
+    "db": "test",
+    "port":"3306",
+    "database":"test"
+}
