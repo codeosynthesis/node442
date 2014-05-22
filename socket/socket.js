@@ -1,10 +1,8 @@
-#!/usr/bin/node
-
 var app = require('http').createServer(handler);
 var io = require('socket.io').listen(app);
 var fs = require('fs');
 
-app.listen(3000);
+app.listen(3300);
 
 function handler(req,res){
     fs.readFile(__dirname+'/index.html',
@@ -36,7 +34,6 @@ io.sockets.on('connection',function(socket){
         console.log('padding on '+data);
         for (var client in clients)
         {
-            
             clients[client].emit('data',{'msg':data});
         }
     });
